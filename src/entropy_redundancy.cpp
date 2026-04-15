@@ -24,11 +24,20 @@ double calculate_entropy(const string &text) {
 }
 
 double calculate_redundancy(const string &text, int alphabet_size = 256) {
-    // TODO(student): implement redundancy = log2(N) - H(X)
-    // Hint: use calculate_entropy(text)
-    (void)text;
-    (void)alphabet_size;
-    return -1.0;
+    if (text.empty()) {
+        return 0.0;
+    }
+    
+    // Entropy thực tế H(X)
+    double h_x = calculate_entropy(text);
+    
+    // Entropy cực đại H_max = log2(N)
+    double h_max = log2(static_cast<double>(alphabet_size));
+    
+    // Redundancy = H_max - H(X)
+    double redundancy = h_max - h_x;
+    
+    return (redundancy < 0) ? 0 : redundancy; // Đảm bảo không âm do sai số làm tròn
 }
 
 int main() {
